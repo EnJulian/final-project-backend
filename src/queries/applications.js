@@ -1,9 +1,8 @@
 /**
- * Add new book
+ * Add new applications
  */
 const addApplication = `
     INSERT INTO applications(
-        application_batch_id,
         email,
         image_url,
         first_name,
@@ -15,7 +14,7 @@ const addApplication = `
         course,
         cgpa,
         status
-    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id, created_at
+    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id, created_at
 `;
 
 const addApplicationBatch = `
@@ -27,8 +26,8 @@ const addApplicationBatch = `
         instructions
     ) VALUES ($1,$2,$3,$4,$5) RETURNING id, created_at`;
 
-const getApplicationByTitle = `
-        SELECT id, title, author, user_id FROM books WHERE title=$1
+const getApplicationByEmail = `
+        SELECT id, first_name, last_name, date_of_birth, address, university, course, cgpa, status, created_at FROM applications WHERE email=$1
 `;
 
 const getApplicationBatchById = `
@@ -36,16 +35,16 @@ const getApplicationBatchById = `
 `;
 
 const getUserUniqueApplication = `
-        SELECT id FROM applications WHERE email=$1 AND application_batch_id=$2
+        SELECT id FROM applications WHERE email=$1 
 `;
 
 const getAllApplications = `
-        SELECT * FROM books
+        SELECT * FROM applications
 `
 
 const getSingleApplication = `
-        SELECT id, title, author, user_id, published_at, created_at
-        FROM books WHERE id=$1
+        SELECT id, first_name, last_name, date_of_birth, address, university, course, cgpa, status, created_at
+        FROM applications WHERE id=$1
 `
 
 const updateApplication = `
@@ -56,7 +55,7 @@ UPDATE books
 
 module.exports = {
     addApplication,
-    getApplicationByTitle,
+    getApplicationByEmail,
     getAllApplications,
     getSingleApplication,
     updateApplication,

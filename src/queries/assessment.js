@@ -31,7 +31,7 @@ const getUserUniqueAssessmentResult = `
 `;
 
 const getAllAssessments = `
-        SELECT * FROM books
+        SELECT * FROM assessment_results
 `
 
 const getSingleAssessment = `
