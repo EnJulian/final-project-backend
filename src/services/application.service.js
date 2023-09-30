@@ -3,32 +3,7 @@ const { addApplication, addApplicationBatch, getApplicationByTitle, getApplicati
 } = require('../queries/applications');
 const { runQuery } = require('../config/database.config');
 
-/**
- * Add new application
- */
-// const addNewApplication = async (body) => {
-//     const { email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa } = body; 
-//
-//     // Check if application already exists
-//     const application = await runQuery(getApplicationByTitle, [title])
-//     if (application.length > 0) {
-//         throw {
-//             code: 409,
-//             status: 'error',
-//             message: 'Application already exist',
-//             data: null
-//         }
-//     }
-//
-//     const created_at = new Date();
-//     const result = await runQuery(addApplication, [email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa, created_at, "pending"])
-//     return {
-//         code: 201,
-//         status: 'success',
-//         message: 'New application added successfully',
-//         data: result[0]
-//     }
-// }
+
 
 /**
  * Get all applications
@@ -64,16 +39,6 @@ const retrieveSingleApplication = async (id) => {
         }
     }
 }
-
-// const updateSingleApplication = async (id, body) => {
-//     const data = await runQuery(updateApplication, [id, body.title, body.author]);
-//     return {
-//         code: 200,
-//         status: 'success',
-//         message: `Application with id ${id} updated successfully`,
-//         data: []
-//     }
-// }
 
 const addNewApplicationBatch = async (body) => {
     const { batchId, imageUrl,
