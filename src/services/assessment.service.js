@@ -1,4 +1,4 @@
-const { addAssessment, addAssessmentBatch, getAssessmentByTitle, getAssessmentBatchById, getAllAssessments, getSingleAssessment, updateAssessment,
+const { addAssessment, addAssessmentBatch,addAssessmentResults, getAssessmentByTitle, getAssessmentBatchById, getAllAssessments, getSingleAssessment, updateAssessment,
     getUserUniqueAssessmentResult
 } = require('../queries/assessment');
 const { runQuery } = require('../config/database.config');
@@ -106,7 +106,7 @@ const takeAssessment = async (body) => {
         }
     }
 
-    const result = await runQuery(addAssessment, [assessmentId, applicationId, timeSpent, JSON.stringify(responses)])
+    const result = await runQuery(addAssessmentResults, [assessmentId, applicationId, timeSpent, JSON.stringify(responses)])
     return {
         code: 201,
         status: 'success',

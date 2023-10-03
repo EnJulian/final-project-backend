@@ -1,5 +1,6 @@
 CREATE TABLE assessment_results(
     id SERIAL PRIMARY KEY,
+    user_id SERIAL REFERENCES users(id) ON DELETE CASCADE,
     assessment_id SERIAL REFERENCES assessments(id) ON DELETE CASCADE,
     application_id SERIAL REFERENCES applications(id) ON DELETE CASCADE,
     image_url varchar(100),

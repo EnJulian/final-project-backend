@@ -1,7 +1,17 @@
 /**
  * Add new book
  */
+
 const addAssessment = `
+    INSERT INTO assessments(
+        batchId, 
+        imageUrl, 
+        time_allocated,
+        questions
+    ) VALUES ($1,$2,$3,$4) RETURNING id, created_at`;
+
+
+const addAssessmentResults = `
     INSERT INTO assessment_results(
         assessment_id,
         application_id,
@@ -31,7 +41,7 @@ const getUserUniqueAssessmentResult = `
 `;
 
 const getAllAssessments = `
-        SELECT * FROM books
+        SELECT * FROM assessment_results
 `
 
 const getSingleAssessment = `
@@ -46,6 +56,7 @@ UPDATE books
 `;
 
 module.exports = {
+    addAssessmentResults,
     addAssessment,
     getAssessmentByTitle,
     getAllAssessments,
