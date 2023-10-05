@@ -7,7 +7,6 @@
     "test": "tests"
   },
   "scripts": {
-    
     "start": "nodemon index.js",
     "db:seed": "node db/seed.js",
     "seed:create": "db-migrate create:seeds --config database.json -e dev",
@@ -19,10 +18,6 @@
     "migrate-test:down": "db-migrate down -c 200 -e test",
     "test": "mocha 'test/**/*.test.js'",
     "coverage": "nyc mocha tests/**/*.js"
-
-
-
-
   },
   "repository": {
     "type": "git",
