@@ -19,12 +19,11 @@ const addApplication = `
 
 const addApplicationBatch = `
     INSERT INTO application_batches(
-        batch_id, 
-        image_url,
+        batch_id,
         link,
         deadline,
         instructions
-    ) VALUES ($1,$2,$3,$4,$5) RETURNING id, created_at`;
+    ) VALUES ($1,$2,$3,$4) RETURNING id, created_at`;
 
 const getApplicationByEmail = `
         SELECT id, first_name, last_name, date_of_birth, address, university, course, cgpa, status, created_at FROM applications WHERE email=$1

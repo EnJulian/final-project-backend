@@ -4,20 +4,21 @@
 
 const addAssessment = `
     INSERT INTO assessments(
-        batchId, 
-        imageUrl, 
+        application_batch_id,
         time_allocated,
         questions
-    ) VALUES ($1,$2,$3,$4) RETURNING id, created_at`;
+    ) VALUES ($1,$2,$3) RETURNING id, created_at`;
 
 
 const addAssessmentResults = `
     INSERT INTO assessment_results(
+        user_id,
         assessment_id,
         application_id,
+        time_allocated,
         time_spent,
         responses
-    ) VALUES ($1,$2,$3,$4) RETURNING id, created_at`;
+    ) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id, created_at`;
 
 const addAssessmentBatch = `
     INSERT INTO application_batches(

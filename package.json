@@ -7,7 +7,6 @@
     "test": "tests"
   },
   "scripts": {
-    
     "start": "nodemon index.js",
     "db:seed": "node db/seed.js",
     "seed:create": "db-migrate create:seeds --config database.json -e dev",
@@ -19,10 +18,6 @@
     "migrate-test:down": "db-migrate down -c 200 -e test",
     "test": "mocha 'test/**/*.test.js'",
     "coverage": "nyc mocha tests/**/*.js"
-
-
-
-
   },
   "repository": {
     "type": "git",
@@ -43,6 +38,7 @@
     "bcrypt": "^5.1.1",
     "chai": "^4.3.8",
     "cloudinary": "^1.41.0",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "db-migrate": "^0.11.14",
     "db-migrate-pg": "^1.5.2",
