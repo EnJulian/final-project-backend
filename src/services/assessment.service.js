@@ -7,9 +7,9 @@ const { runQuery } = require('../config/database.config');
  * Add new application
  */
 const addNewAssessment = async (body) => {
-    const { batchId, imageUrl, questions } = body;
+    const { application_batch_id, questions } = body;
 
-    const result = await runQuery(addAssessment, [batchId, imageUrl, 30, JSON.stringify(questions)])
+    const result = await runQuery(addAssessment, [application_batch_id, 30, JSON.stringify(questions)])
     return {
         code: 201,
         status: 'success',
@@ -93,10 +93,10 @@ const addNewAssessmentBatch = async (body) => {
 }
 
 const takeAssessment = async (body) => {
-    const { applicationId, assessmentId, timeSpent, responses } = body;
+    const { user_id, application_id, assessment_id, time_allocated, time_spent, responses } = body;
 
     // Check if application batch already exists
-    const application = await runQuery(getUserUniqueAssessmentResult, [assessmentId, applicationId])
+    const application = await runQuery(getUserUniqueAssessmentResult, [assessment_id, application_id])
     if (application.length > 0) {
         throw {
             code: 409,
@@ -106,7 +106,7 @@ const takeAssessment = async (body) => {
         }
     }
 
-    const result = await runQuery(addAssessmentResults, [assessmentId, applicationId, timeSpent, JSON.stringify(responses)])
+    const result = await runQuery(addAssessmentResults, [user_id, assessment_id, time_allocated, application_id, time_spent, JSON.stringify(responses)])
     return {
         code: 201,
         status: 'success',

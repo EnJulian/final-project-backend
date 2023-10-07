@@ -2,7 +2,7 @@ const express = require('express');
 const ApplicationController = require('../controllers/application.controller');
 const {validAdmin, validApplicant} = require("../middlewares/permission.middleware");
 const {userImageUploader, userCvUploader} = require('../middlewares/cloudinary.middleware')
-const {imgUpload, pdfUpload} = require('../../util/multer')
+// const {imgUpload, pdfUpload} = require('../../util/multer')
 
 
 const router = express.Router();

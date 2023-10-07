@@ -4,7 +4,7 @@ CREATE TABLE assessment_results(
     assessment_id SERIAL REFERENCES assessments(id) ON DELETE CASCADE,
     application_id SERIAL REFERENCES applications(id) ON DELETE CASCADE,
     image_url varchar(100),
-    time_allocated varchar(100),
+    time_allocated varchar(100) DEFAULT '60',
     responses JSON,
     time_spent integer,
     status boolean DEFAULT true,
