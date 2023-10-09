@@ -9,10 +9,10 @@ const { notFound, appErrorHandler, genericErrorHandler } = require('./src/middle
 const app = express();
 
 app.use(express.json())
+
+
 const cors = require('cors');
-app.use(cors({
-    origin: 'http://localhost:7006'
-}));
+app.use(cors());
 
 
 const PORT = envConfig.APP_PORT || 7006;
