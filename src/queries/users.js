@@ -13,14 +13,32 @@ const addUser = `
   VALUES ($1,$2,$3,$4,$5,$6) RETURNING id, first_name, last_name, email, role, created_at
 `;
 
+const fetchAllUsers = `
+SELECT * FROM users
+`;
+
 const findUserById = `SELECT id, first_name, last_name, email FROM users WHERE id=$1`
 
 const findUserByEmail = `
  SELECT id,  first_name, last_name, email, role, password FROM users WHERE email=$1
-`
+`;
+
+const updateUserTestScore = `
+UPDATE users 
+SET test_scores = test_scores + 10  
+WHERE id = $1 ` ;
+
+
+const updateUserTakenStatus = `
+UPDATE users 
+SET test_taken = false
+WHERE id = $1`;
 
 module.exports = {
+    updateUserTakenStatus,
+    updateUserTestScore,
     addUser,
     findUserByEmail,
-    findUserById
+    findUserById,
+    fetchAllUsers
 }

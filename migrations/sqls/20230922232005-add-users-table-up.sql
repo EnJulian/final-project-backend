@@ -1,5 +1,6 @@
 /* Replace with your SQL commands */
-CREATE TYPE role_type AS ENUM('user', 'super_admin');
+DROP TYPE IF EXISTS role_enum;
+CREATE TYPE role_enum AS ENUM('user', 'super_admin');
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     first_name varchar(30),
@@ -8,7 +9,9 @@ CREATE TABLE users (
     phone_number varchar(100) UNIQUE,
     password varchar(100),
     salt varchar(100),
-    role role_type,
+    role role_enum,
+    test_taken BOOLEAN DEFAULT false,
+    test_scores INTEGER DEFAULT 0,
     status boolean DEFAULT true,
     created_at timestamptz DEFAULT NOW(),
     updated_at timestamptz DEFAULT NOW()

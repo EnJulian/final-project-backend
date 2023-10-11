@@ -1,6 +1,5 @@
 CREATE TABLE application_batches(
     id SERIAL PRIMARY KEY,
-    image_url varchar(100),
     link varchar(100),
     deadline varchar(100),
     batch_id SERIAL UNIQUE,
@@ -9,7 +8,7 @@ CREATE TABLE application_batches(
     created_at timestamptz DEFAULT NOW(),
     updated_at timestamptz DEFAULT NOW()
 );
-
+DROP TYPE IF EXISTS status_enum;
 CREATE TYPE status_enum AS ENUM('pending', 'declined', 'approved');
 CREATE TABLE applications(
     id SERIAL PRIMARY KEY,
