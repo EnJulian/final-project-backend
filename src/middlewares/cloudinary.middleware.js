@@ -4,6 +4,7 @@ const { findUserById } = require('../queries/users');
 //const { setApplicantImageDb, setApplicantDocDb } = require('../services/applicant.service')
 
 const cloudinary = require("../../util/cloudinary");
+const {files} = require("express/lib/request");
 
 
 
@@ -30,22 +31,14 @@ const checkIfIdExists = async (req, res, next) => {
 
 
 
-const getSecureUrl = async(filePath) => {
-
+const getSecureUrl = async (imageData) => {
     try {
-
-        const  { secure_url } = await cloudinary.uploader.upload(filePath,  { resource_type: 'raw'});
-
-
-        return secure_url
-
-
-    }catch(error){
-        return error
-
+        const { secure_url } = await cloudinary.uploader.upload(imageData, { resource_type: 'image' });
+        return secure_url;
+    } catch (error) {
+        return error;
     }
-
-}
+};
 
 
 
@@ -53,14 +46,21 @@ const getSecureUrl = async(filePath) => {
 //upload applicant image
 const userImageUploader = async (req, res, next) => {
     try {
+        const image = req.files.imageUrl; 
 
-        const { imageUrl } = req.body
-       
+        if (!image) {
+            return res.status(400).json({
+                status: 'error',
+                code: 400,
+                message: 'No image provided',
+                data: null,
+            });
+        }
 
-        const imgUrl = await getSecureUrl(imageUrl)
-        console.log(imgUrl)
+        const imgUrl = await getSecureUrl(image.data); 
 
-        if (!imgUrl || imgUrl instanceof Error) {
+        if (imgUrl instanceof Error) {
+            
             return res.status(400).json({
                 status: 'error',
                 code: 400,
@@ -69,10 +69,9 @@ const userImageUploader = async (req, res, next) => {
             });
         }
 
-        req.imgUrl = imgUrl
+        req.imgUrl = imgUrl; 
 
         return next();
-
     } catch (error) {
         return next(error);
     }

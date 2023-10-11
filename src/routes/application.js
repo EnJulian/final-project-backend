@@ -9,7 +9,7 @@ const router = express.Router();
 
 
 router.post('/', validAdmin, ApplicationController.createApplication);
-router.post('/apply', validApplicant, userImageUploader, userCvUploader, ApplicationController.apply);
+router.post('/apply', validApplicant, userImageUploader, ApplicationController.apply);
 router.get('/', validAdmin, ApplicationController.fetchAllApplications);
 router.get('/:id',validAdmin, ApplicationController.fetchSingleApplication);
 // router.put('/:id', ApplicationController.updateSingleApplication);
