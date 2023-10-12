@@ -13,6 +13,9 @@ router.post('/apply', validApplicant, userImageUploader, userCvUploader, Applica
 router.get('/', validAdmin, ApplicationController.fetchAllApplications);
 router.get('/:id',validAdmin, ApplicationController.fetchSingleApplication);
 // router.put('/:id', ApplicationController.updateSingleApplication);
+router.get('/date/:id', ApplicationController.getDate)
+
+router.get('/status/:id', ApplicationController.gettingStatus)
 
 module.exports = router
 

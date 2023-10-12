@@ -1,5 +1,5 @@
 const { addApplication, addApplicationBatch, getApplicationByTitle, getApplicationBatchById, getAllApplications, getSingleApplication, updateApplication,
-    getUserUniqueApplication
+    getUserUniqueApplication,getCreatedAt,getStatus
 } = require('../queries/applications');
 const { runQuery } = require('../config/database.config');
 
@@ -93,11 +93,39 @@ const apply = async (body) => {
     }
 }
 
+
+const getCreationDate = async (id) => {
+    const result = await runQuery(getCreatedAt, [id]);
+    if(result[0]){
+        return {
+            code: 200,
+            status: 'success',
+            message: 'Date of creation fetched successfully',
+            data: result[0]
+        }
+    }
+}
+
+const getApplicationStatus = async (id) => {
+    const result = await runQuery(getStatus, [id]);
+    if(result[0]){
+        return {
+            code: 200,
+            status: 'success',
+            message: 'Application Status fetched successfully',
+            data: result[0]
+        }
+    }
+}
+
 module.exports = {
+
     // addNewApplication,
     retrieveAllApplications,
     retrieveSingleApplication,
     // updateSingleApplication,
     addNewApplicationBatch,
-    apply
+    apply,
+    getCreationDate,
+    getApplicationStatus
 }

@@ -7,19 +7,19 @@ const isUrl = require('is-url');
 const validateSignUpApplicantInput = (req, res, next) => {
 
   try {
-    const { email, firstname, lastname, password, phonenumber } = req.body;
+    const { email, firstName, lastName, password, phoneNumber } = req.body;
 
 
     if (typeof email !== 'string' || !email.includes('@')) {
       return responseProvider( res, null, 'provide a valid email', 400)
     }
 
-    if (typeof firstname !== 'string' || !firstname) {
+    if (typeof firstName !== 'string' || !firstName) {
       return responseProvider( res, null, 'provide a valid firstname', 400)
     }
 
 
-    if (typeof lastname !== 'string' || !lastname) {
+    if (typeof lastName !== 'string' || !lastName) {
       return responseProvider( res, null, 'provide a valid lastname', 400)
     }
 
@@ -28,7 +28,7 @@ const validateSignUpApplicantInput = (req, res, next) => {
       return responseProvider( res, null, 'provide a valid password', 400)
     }
 
-    if (typeof parseInt(phonenumber) !== 'number' || phonenumber.length < 10) {
+    if (typeof parseInt(phoneNumber) !== 'number' || phoneNumber.length < 10) {
       return responseProvider( res, null, 'provide a valid phone number', 400)
     }
 

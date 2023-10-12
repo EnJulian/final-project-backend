@@ -47,6 +47,26 @@ const fetchSingleApplication = async (req, res, next) => {
     }
 }
 
+const getDate= async(req,res,next)=>{
+    try {
+        const { id } = req.params
+        const result = await ApplicationService.getCreationDate(id);
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const gettingStatus= async(req,res,next)=>{
+    try {
+        const { id } = req.params
+        const result = await ApplicationService.getApplicationStatus(id);
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
 // const updateSingleApplication = async (req, res, next) => {
 //     try {
 //         const { id } = req.params
@@ -105,6 +125,8 @@ module.exports = {
     // updateSingleApplication,
     // insertApplicationBatch,
     apply,
+    getDate,
+    gettingStatus
     // storeUserImage,
     // storeUserDocument
 
