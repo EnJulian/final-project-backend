@@ -4,8 +4,6 @@ CREATE TABLE assessments(
     image_url varchar(100),
     time_allocated varchar(100),
     questions JSON,
-    responses JSON,
-    answers JSON,
     status boolean DEFAULT true,
     created_at timestamptz DEFAULT NOW(),
     updated_at timestamptz DEFAULT NOW()

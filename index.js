@@ -11,9 +11,7 @@ const app = express();
 app.use(express.json())
 app.use(fileupload({limit: 50*1024*1024}))
 const cors = require('cors');
-app.use(cors({
-    origin: 'http://localhost:7006'
-}));
+app.use(cors());
 
 
 const PORT = envConfig.APP_PORT || 7006;
