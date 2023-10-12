@@ -3,8 +3,9 @@ const { findUserById } = require('../queries/users');
 
 //const { setApplicantImageDb, setApplicantDocDb } = require('../services/applicant.service')
 
-const cloudinary = require("../../util/cloudinary");
-
+const cloudinary = require("cloudinary");
+const {files} = require("express/lib/request");
+const config = require("../config/env");
 
 
 const checkIfIdExists = async (req, res, next) => {
@@ -30,22 +31,38 @@ const checkIfIdExists = async (req, res, next) => {
 
 
 
-const getSecureUrl = async(filePath) => {
-
+const getSecureUrl = async (fileData) => {
     try {
-
-        const  { secure_url } = await cloudinary.uploader.upload(filePath,  { resource_type: 'raw'});
-
-
-        return secure_url
-
-
-    }catch(error){
-        return error
-
+        cloudinary.config({
+            cloud_name: config.CLOUDINARY_CLOUD_NAME,
+            api_key: config.CLOUDINARY_API_KEY,
+            api_secret: config.CLOUDINARY_SECRET_KEY
+        });
+        return new Promise((resolve, reject) => {
+            cloudinary.v2.uploader.upload_stream({ resource_type: "auto" }, (error, result) => {
+                if (error) {
+                    reject({
+                        isSuccess: false,
+                        message: error.message,
+                        data: null
+                    });
+                } else {
+                    resolve({
+                        isSuccess: true,
+                        message: "File uploaded successfully",
+                        data: result.secure_url
+                    });
+                }
+            }).end(fileData);
+        });
+    } catch (error) {
+        return {
+            isSuccess: false,
+            message: error.message,
+            data: null
+        };
     }
-
-}
+};
 
 
 
@@ -53,26 +70,32 @@ const getSecureUrl = async(filePath) => {
 //upload applicant image
 const userImageUploader = async (req, res, next) => {
     try {
+        const image = req.files.imageUrl; 
 
-        const { imageUrl } = req.body
-       
-
-        const imgUrl = await getSecureUrl(imageUrl)
-        console.log(imgUrl)
-
-        if (!imgUrl || imgUrl instanceof Error) {
+        if (!image) {
             return res.status(400).json({
                 status: 'error',
                 code: 400,
-                message: 'Cannot upload image, try again!',
+                message: 'No image provided',
                 data: null,
             });
         }
 
-        req.imgUrl = imgUrl
+        const uploadResponse = await getSecureUrl(image.data); 
+
+        if (!uploadResponse.isSuccess) {
+            
+            return res.status(424).json({
+                status: 'failed',
+                code: 424,
+                message: uploadResponse.message,
+                data: null,
+            });
+        }
+
+        req.body.imageUrl = uploadResponse.data; 
 
         return next();
-
     } catch (error) {
         return next(error);
     }
@@ -89,20 +112,30 @@ const userCvUploader = async (req, res, next) => {
 
     try {
 
-        const { cvUrl } = req.body
-        console.log(cvUrl)
-        const setCvUrl = await getSecureUrl(cvUrl)
-        console.log(setCvUrl)
-        if (!setCvUrl || setCvUrl instanceof Error) {
+        const cvUrl = req.files.cvUrl;
+        
+        if (!cvUrl) {
             return res.status(400).json({
                 status: 'error',
                 code: 400,
-                message: 'Cannot upload cv, try again!',
+                message: 'No cv provided',
                 data: null,
             });
         }
+        
+        const uploadResponse = await getSecureUrl(cvUrl.data);
 
-        req.setCvUrl = setCvUrl
+        if (!uploadResponse.isSuccess) {
+
+            return res.status(424).json({
+                status: 'failed',
+                code: 424,
+                message: uploadResponse.message,
+                data: null,
+            });
+        }
+        
+        req.body.cvUrl = uploadResponse.data
 
         return next();
 

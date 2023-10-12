@@ -57,7 +57,8 @@ const addNewApplicationBatch = async (body) => {
         }
     }
 
-    const result = await runQuery(addApplicationBatch, [batch_id,
+    const result = await runQuery(addApplicationBatch, [
+        batch_id,
         link,
         deadline,
         instructions])
@@ -70,7 +71,7 @@ const addNewApplicationBatch = async (body) => {
 }
 
 const apply = async (body) => {
-    const { email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa } = body;
+    const { email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa, user_id} = body;
 
     // Check if application batch already exists
     const application = await runQuery(getUserUniqueApplication, [email])
@@ -83,7 +84,7 @@ const apply = async (body) => {
         }
     }
 
-    const result = await runQuery(addApplication, [ email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa, "pending"])
+    const result = await runQuery(addApplication, [ email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa, "pending", user_id])
     return {
         code: 201,
         status: 'success',

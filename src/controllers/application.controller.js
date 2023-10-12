@@ -18,10 +18,8 @@ const createApplication = async (req, res, next) => {
 
 const apply = async (req, res, next) => {
     try {
-        const imageUrl = req.imgUrl
-        const cvUrl = req.setCvUrl
-         console.log(imageUrl, cvUrl)
-        const result = await ApplicationService.apply({...req.body, imageUrl, cvUrl});
+        console.log(req.data)
+        const result = await ApplicationService.apply({ ...req.body, user_id: req.data.id });
         return res.status(result.code).json(result)
     } catch (error) {
         next(error)

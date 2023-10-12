@@ -3,7 +3,7 @@ const validApplicant = (req, res, next) => {
         return res.status(403).json({
             code: 403,
             status: 'error',
-            message: 'you do not have enough permission to access this web resource',
+            message: 'You do not have enough permission to access this web resource',
             data: null
         })
     }
@@ -15,7 +15,7 @@ const validAdmin = (req, res, next) => {
         return res.status(403).json({
             code: 403,
             status: 'error',
-            message: 'you do not have enough permission to access this web resource',
+            message: 'You do not have enough permission to access this web resource',
             data: null
         })
     }
