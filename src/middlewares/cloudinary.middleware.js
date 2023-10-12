@@ -59,7 +59,7 @@ const getSecureUrl = async (fileData) => {
         return {
             isSuccess: false,
             message: error.message,
-            data: nul
+            data: null
         };
     }
 };
@@ -93,7 +93,7 @@ const userImageUploader = async (req, res, next) => {
             });
         }
 
-        req.body.imgUrl = uploadResponse.data; 
+        req.body.imageUrl = uploadResponse.data; 
 
         return next();
     } catch (error) {

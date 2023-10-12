@@ -18,7 +18,8 @@ const createApplication = async (req, res, next) => {
 
 const apply = async (req, res, next) => {
     try {
-        const result = await ApplicationService.apply({ ...req.body });
+        console.log(req.data)
+        const result = await ApplicationService.apply({ ...req.body, user_id: req.data.id });
         return res.status(result.code).json(result)
     } catch (error) {
         next(error)
