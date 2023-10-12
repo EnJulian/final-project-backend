@@ -23,6 +23,11 @@ const findUserByEmail = `
  SELECT id,  first_name, last_name, email, role, password FROM users WHERE email=$1
 `;
 
+const getUserUniqueApplication = `
+        SELECT id FROM applications WHERE application_id=$1
+`;
+
+
 const updateUserTestScore = `
 UPDATE users 
 SET test_scores = test_scores + 10  
@@ -40,5 +45,6 @@ module.exports = {
     addUser,
     findUserByEmail,
     findUserById,
-    fetchAllUsers
+    fetchAllUsers,
+    getUserUniqueApplication
 }

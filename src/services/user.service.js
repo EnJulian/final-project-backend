@@ -1,4 +1,4 @@
-const { addUser, findUserByEmail, findUserById, updateUserTakenStatus, updateUserTestScore, fetchAllUsers } = require('../queries/users');
+const { addUser, findUserByEmail, findUserById, updateUserTakenStatus, updateUserTestScore, fetchAllUsers, getUserUniqueApplication } = require('../queries/users');
 const { runQuery } = require('../config/database.config')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -106,6 +106,16 @@ const getAllUsers = async () => {
     }
 }
 
+const getUniqueApplication = async () => {
+    const data = await runQuery(getUserUniqueApplication);
+    return {
+        code: 200,
+        status: 'success',
+        message: 'User has an application, they can route to dashboard',
+        data
+    }
+}
+
 const updateTestTakenStatus = async (id) => {
     const updated_at = new Date();
     const result = await runQuery(updateUserTakenStatus, [ updated_at, id]);
@@ -147,5 +157,6 @@ module.exports = {
     loginUser,
     getAllUsers,
     updateTestTakenStatus,
-    updateTestScores
+    updateTestScores,
+    getUniqueApplication
 }
