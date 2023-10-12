@@ -9,7 +9,9 @@ const { notFound, appErrorHandler, genericErrorHandler } = require('./src/middle
 const app = express();
 
 app.use(express.json())
+
 app.use(fileupload({limit: 50*1024*1024}))
+
 const cors = require('cors');
 app.use(cors());
 
