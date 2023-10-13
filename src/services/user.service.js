@@ -1,4 +1,4 @@
-const { addUser, findUserByEmail, findUserById, updateUserTakenStatus, updateUserTestScore, fetchAllUsers } = require('../queries/users');
+const { addUser, findUserByEmail, findUserById, updateUserTakenStatus, updateUserTestScore, fetchAllUsers, getUserUniqueApplication } = require('../queries/users');
 const { runQuery } = require('../config/database.config')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -58,7 +58,8 @@ const loginUser = async (body) => {
         }
     }
     // Compare user passwords
-    const { password: dbPassword, role, first_name, last_name, id } = user[0];
+    console.log(user[0])
+    const { password: dbPassword, role, first_name, last_name, id, isapplied, test_taken, test_scores, created_at } = user[0];
     const userPassword = bcrypt.compareSync(password, dbPassword); // Boolean true/false
     if (!userPassword) {
         throw {
@@ -79,7 +80,7 @@ const loginUser = async (body) => {
         first_name,
         last_name,
         email,
-        role
+        role,
     }, config.JWT_SECRET_KEY, options);
     return {
         status: 'success',
@@ -91,7 +92,11 @@ const loginUser = async (body) => {
             last_name,
             email,
             role,
-            token
+            token,
+            isapplied,
+            test_taken,
+            test_scores, 
+            created_at
         }
     }
 }
@@ -102,6 +107,16 @@ const getAllUsers = async () => {
         code: 200,
         status: 'success',
         message: 'Users fetched successfully',
+        data
+    }
+}
+
+const getUniqueApplication = async () => {
+    const data = await runQuery(getUserUniqueApplication);
+    return {
+        code: 200,
+        status: 'success',
+        message: 'User has an application, they can route to dashboard',
         data
     }
 }
@@ -147,5 +162,6 @@ module.exports = {
     loginUser,
     getAllUsers,
     updateTestTakenStatus,
-    updateTestScores
+    updateTestScores,
+    getUniqueApplication
 }

@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.post('/', validAdmin, AssessmentController.createAssessment);
 router.post('/take', validApplicant,  AssessmentController.takeAssessment, UserController.updateAssessmentTakenStatus);
+router.get('/', validAdmin, AssessmentController.fetchAllAssessments);
+
 
 module.exports = router
 

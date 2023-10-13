@@ -42,7 +42,10 @@ const getUserUniqueAssessmentResult = `
 `;
 
 const getAllAssessments = `
-        SELECT * FROM assessment_results
+        SELECT a.*, u.test_taken, u.test_scores
+    from applications a 
+    inner join users u ON u.id=a.user_id
+           WHERE u.test_taken = true
 `
 
 const getSingleAssessment = `

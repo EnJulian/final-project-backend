@@ -42,6 +42,16 @@ const fetchAllUsers = async (req, res, next) => {
     }
 }
 
+const fetchUniqueApplication = async (req, res, next) => {
+    try {
+        const result = await UserService.getUniqueApplication();
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 
 const updateAssessmentTakenStatus = async (req, res, next) => {
     try {
@@ -78,5 +88,6 @@ module.exports = {
     signInUser,
     fetchAllUsers,
     updateAssessmentTakenStatus,
-    updateAssessmentScore
+    updateAssessmentScore,
+    fetchUniqueApplication
 }

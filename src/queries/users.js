@@ -20,8 +20,18 @@ SELECT * FROM users
 const findUserById = `SELECT id, first_name, last_name, email FROM users WHERE id=$1`
 
 const findUserByEmail = `
- SELECT id,  first_name, last_name, email, role, password FROM users WHERE email=$1
+ SELECT id,  first_name, last_name, email, role, isapplied, test_taken, test_scores, created_at, password FROM users WHERE email=$1
 `;
+
+const getUserUniqueApplication = `
+        SELECT id FROM applications WHERE application_id=$1
+`;
+
+
+const checkIsApplied = `
+UPDATE users
+SET isapplied = true
+WHERE id = $1 ` ;
 
 const updateUserTestScore = `
 UPDATE users 
@@ -31,7 +41,7 @@ WHERE id = $1 ` ;
 
 const updateUserTakenStatus = `
 UPDATE users 
-SET test_taken = false
+SET test_taken = true
 WHERE id = $1`;
 
 module.exports = {
@@ -40,5 +50,7 @@ module.exports = {
     addUser,
     findUserByEmail,
     findUserById,
-    fetchAllUsers
+    fetchAllUsers,
+    checkIsApplied,
+    getUserUniqueApplication
 }
