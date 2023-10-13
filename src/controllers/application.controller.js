@@ -20,6 +20,7 @@ const apply = async (req, res, next) => {
     try {
         console.log(req.data)
         const result = await ApplicationService.apply({ ...req.body, user_id: req.data.id });
+        
         return res.status(result.code).json(result)
     } catch (error) {
         next(error)
@@ -34,7 +35,16 @@ const fetchAllApplications = async (req, res, next) => {
     }
 }
 
+const fetchApplicationById = async (req, res, next) => {
+    try {
+        console.log(req.data)
+        const result = await ApplicationService.getApplicationById({ ...req.body, user_id: req.data.id });
 
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
 
 
 const fetchSingleApplication = async (req, res, next) => {
@@ -122,6 +132,7 @@ module.exports = {
     createApplication,
     fetchAllApplications,
     fetchSingleApplication,
+    fetchApplicationById,
     // updateSingleApplication,
     // insertApplicationBatch,
     apply,

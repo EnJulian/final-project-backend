@@ -92,6 +92,18 @@ const addNewAssessmentBatch = async (body) => {
     }
 }
 
+const getResults = async () => {
+    const result = await runQuery(getAllAssessments);
+    if(result[0]){
+        return {
+            code: 200,
+            status: 'success',
+            message: 'Results fetched successfully',
+            data: result
+        }
+    }
+}
+
 const takeAssessment = async (body) => {
     const { user_id, application_id, assessment_id, time_allocated, time_spent, responses } = body;
 
@@ -121,5 +133,6 @@ module.exports = {
     retrieveSingleAssessment,
     updateSingleAssessment,
     addNewAssessmentBatch,
+    getResults,
     takeAssessment
 }

@@ -1,6 +1,8 @@
 const { addApplication, addApplicationBatch, getApplicationByTitle, getApplicationBatchById, getAllApplications, getSingleApplication, updateApplication,
-    getUserUniqueApplication,getCreatedAt,getStatus
+    getUserUniqueApplication,getCreatedAt,getStatus,
+    retrieveApplicationById
 } = require('../queries/applications');
+const {checkIsApplied} = require('../queries/users')
 const { runQuery } = require('../config/database.config');
 
 
@@ -85,6 +87,7 @@ const apply = async (body) => {
     }
 
     const result = await runQuery(addApplication, [ email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa, "pending", user_id])
+    await runQuery(checkIsApplied, [user_id])
     return {
         code: 201,
         status: 'success',
@@ -93,18 +96,39 @@ const apply = async (body) => {
     }
 }
 
+// const checkUserHasApplication = async (body) => {
+//     const { email } = body;
+//     try {
+//         const result = await runQuery(getUserUniqueApplication, [email]);
+//         // If a row with the user's email is found, return true; otherwise, return false
+//         return !!result;
+//     } catch (error) {
+//         // Handle any errors that might occur during the database query
+//         console.error('Error checking user application:', error);
+//         return false; // You might want to return false in case of an error
+//     }
+// }
 
-const getCreationDate = async (id) => {
-    const result = await runQuery(getCreatedAt, [id]);
-    if(result[0]){
-        return {
-            code: 200,
-            status: 'success',
-            message: 'Date of creation fetched successfully',
-            data: result[0]
-        }
+const getApplicationById = async (body) => {
+    const { user_id } = body; 
+    
+    const data = await runQuery(retrieveApplicationById, [user_id]);
+    console.log(data)
+    return {
+        code: 200,
+        status: 'success',
+        message: `Application found for user with id ${user_id}`,
+        data
     }
-}
+    
+};
+
+
+
+
+
+
+
 
 const getApplicationStatus = async (id) => {
     const result = await runQuery(getStatus, [id]);
@@ -120,12 +144,11 @@ const getApplicationStatus = async (id) => {
 
 module.exports = {
 
-    // addNewApplication,
+   
     retrieveAllApplications,
     retrieveSingleApplication,
-    // updateSingleApplication,
+    getApplicationById,
     addNewApplicationBatch,
     apply,
-    getCreationDate,
     getApplicationStatus
 }

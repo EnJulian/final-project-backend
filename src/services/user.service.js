@@ -58,7 +58,8 @@ const loginUser = async (body) => {
         }
     }
     // Compare user passwords
-    const { password: dbPassword, role, first_name, last_name, id } = user[0];
+    console.log(user[0])
+    const { password: dbPassword, role, first_name, last_name, id, isapplied, test_taken, test_scores, created_at } = user[0];
     const userPassword = bcrypt.compareSync(password, dbPassword); // Boolean true/false
     if (!userPassword) {
         throw {
@@ -79,7 +80,7 @@ const loginUser = async (body) => {
         first_name,
         last_name,
         email,
-        role
+        role,
     }, config.JWT_SECRET_KEY, options);
     return {
         status: 'success',
@@ -91,7 +92,11 @@ const loginUser = async (body) => {
             last_name,
             email,
             role,
-            token
+            token,
+            isapplied,
+            test_taken,
+            test_scores, 
+            created_at
         }
     }
 }

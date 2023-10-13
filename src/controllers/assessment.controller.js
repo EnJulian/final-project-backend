@@ -25,8 +25,18 @@ const takeAssessment = async (req, res, next) => {
     }
 }
 
+const fetchAllAssessments = async (req, res, next) => {
+    try {
+        const result = await AssessmentService.getResults();
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     createAssessment,
-    takeAssessment
+    takeAssessment,
+    fetchAllAssessments
 
 }

@@ -30,17 +30,23 @@ const getApplicationByEmail = `
         SELECT id, first_name, last_name, date_of_birth, address, university, course, cgpa, status, created_at FROM applications WHERE email=$1
 `;
 
+const retrieveApplicationById = `
+        SELECT id, first_name, last_name, email, date_of_birth, address, university, course, cgpa, status, created_at FROM applications WHERE user_id=$1
+`;
+
+
 const getApplicationBatchById = `
         SELECT id FROM application_batches WHERE batch_id=$1
 `;
 
 const getUserUniqueApplication = `
-        SELECT id FROM applications WHERE email=$1 
+ SELECT id FROM applications WHERE email=$1
 `;
 
 const getAllApplications = `
         SELECT * FROM applications
 `
+
 
 const getSingleApplication = `
         SELECT id, first_name, last_name, date_of_birth, address, university, course, cgpa, status, created_at
@@ -66,6 +72,7 @@ module.exports = {
     addApplicationBatch,
     getApplicationBatchById,
     getUserUniqueApplication,
+    retrieveApplicationById,
     getCreatedAt,
     getStatus
 }
