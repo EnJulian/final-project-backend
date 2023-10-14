@@ -48,16 +48,19 @@ const getAllAssessments = `
            WHERE u.test_taken = true
 `
 
-const getSingleAssessment = `
-        SELECT id, title, author, user_id, published_at, created_at
-        FROM books WHERE id=$1
-`
-
-const updateAssessment = `
-UPDATE books 
-    SET title = $2, author = $3
-    WHERE id = $1
+const addTimer = `
+  INSERT INTO assessments(
+    time_allocated
+  )
+  VALUES ($1) RETURNING id,created_at
 `;
+
+const updateTimer=`
+UPDATE assessments 
+SET time_allocated =$1
+WHERE id = $2
+RETURNING id,time_allocated,updated_at
+`
 
 
 
@@ -66,9 +69,9 @@ module.exports = {
     addAssessment,
     getAssessmentByTitle,
     getAllAssessments,
-    getSingleAssessment,
-    updateAssessment,
     addAssessmentBatch,
+    updateTimer,
+    addTimer,
     getAssessmentBatchById,
     getUserUniqueAssessmentResult
 }

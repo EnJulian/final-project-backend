@@ -6,11 +6,6 @@ const addTimer = `
 `;
 
 
-const updateTimer=`
-UPDATE timer_config 
-SET time =$1
-WHERE id = $2
-RETURNING id,time,updated_at
-`
 
-module.exports={addTimer,updateTimer}
+
+module.exports={addTimer}

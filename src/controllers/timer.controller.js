@@ -12,7 +12,7 @@ const createTimer = async (req, res, next) => {
 
 const editTimer= async(req,res,next)=>{
     try {
-        const response= await updateAllocatedTime(req.body.time,req.params.id)
+        const response= await updateAllocatedTime(req.body.time_allocated,req.params.id)
         return res.status(response.code).json(response)
     } catch (error) {
         next(error)
