@@ -1,13 +1,13 @@
-const {addTimer,updateTimer}= require('../queries/timer')
+const {addTimer,updateTimer}= require('../queries/assessment')
 const { runQuery } = require('../config/database.config');
 
 
 
 const setTimer = async (body) => {
-    const { time } = body;
+    const { time_allocated } = body;
 
     // Check if that user exists inside the db
-    const timer = await runQuery(addTimer, [time]);
+    const timer = await runQuery(addTimer, [time_allocated]);
     
         return {
             code: 200,
@@ -17,9 +17,9 @@ const setTimer = async (body) => {
         
     }
 }
-const updateAllocatedTime= async(time,id)=>{
+const updateAllocatedTime= async(time_allocated,id)=>{
     
-    const updateIt= await runQuery(updateTimer,[time,id])
+    const updateIt= await runQuery(updateTimer,[time_allocated,id])
     return{
              code:201,
             status:'success',
