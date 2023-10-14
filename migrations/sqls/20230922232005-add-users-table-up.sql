@@ -12,6 +12,9 @@ CREATE TABLE users (
     role role_enum,
     test_taken BOOLEAN DEFAULT false,
     test_scores INTEGER DEFAULT 0,
+    isapplied BOOLEAN DEFAULT false,
+    country varchar(100) DEFAULT '',
+    address varchar(100) DEFAULT '',
     status boolean DEFAULT true,
     created_at timestamptz DEFAULT NOW(),
     updated_at timestamptz DEFAULT NOW()
