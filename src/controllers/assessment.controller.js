@@ -34,6 +34,8 @@ const fetchAllAssessments = async (req, res, next) => {
     }
 }
 
+
+
 module.exports = {
     createAssessment,
     takeAssessment,

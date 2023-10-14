@@ -1,5 +1,5 @@
 const { addAssessment, addAssessmentBatch,addAssessmentResults, getAssessmentByTitle, getAssessmentBatchById, getAllAssessments, getSingleAssessment, updateAssessment,
-    getUserUniqueAssessmentResult
+    getUserUniqueAssessmentResult,updateTimer
 } = require('../queries/assessment');
 const { runQuery } = require('../config/database.config');
 
@@ -127,6 +127,8 @@ const takeAssessment = async (body) => {
     }
 }
 
+
+
 module.exports = {
     addNewAssessment,
     retrieveAllAssessments,
@@ -135,4 +137,5 @@ module.exports = {
     addNewAssessmentBatch,
     getResults,
     takeAssessment
+   
 }
