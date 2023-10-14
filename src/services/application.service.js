@@ -73,7 +73,7 @@ const addNewApplicationBatch = async (body) => {
 }
 
 const apply = async (body) => {
-    const { email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa, user_id} = body;
+    const { email, imageUrl, firstName, lastName, cvUrl, dateOfBirth, address, university, course, cgpa, user_id } = body;
 
     // Check if application batch already exists
     const application = await runQuery(getUserUniqueApplication, [email])

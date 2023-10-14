@@ -11,7 +11,9 @@ const validApplicant = (req, res, next) => {
 }
 
 const validAdmin = (req, res, next) => {
+    console.log("data check", req.data)
     if (req.data && req.data.role !== 'super_admin') {
+        
         return res.status(403).json({
             code: 403,
             status: 'error',

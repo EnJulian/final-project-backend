@@ -42,6 +42,37 @@ const fetchAllUsers = async (req, res, next) => {
     }
 }
 
+const fetchAdminCreds = async (req, res, next) => {
+    try {
+        const result = await UserService.getAdminCred(req.body);
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const findAdmin = async (req, res, next) => {
+    try {
+        // console.log(req.data)
+        const result = await UserService.getSingleAdmin(req.params.id);
+        
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const updateAdmin = async (req, res, next) => {
+    try {
+        const result = await UserService.updateSingleAdmin({...req.body, id:req.params.id});
+
+        return res.status(result.code).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 const fetchUniqueApplication = async (req, res, next) => {
     try {
         const result = await UserService.getUniqueApplication();
@@ -89,5 +120,8 @@ module.exports = {
     fetchAllUsers,
     updateAssessmentTakenStatus,
     updateAssessmentScore,
+    fetchAdminCreds,
+    findAdmin,
+    updateAdmin,
     fetchUniqueApplication
 }

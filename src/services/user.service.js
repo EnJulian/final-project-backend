@@ -1,4 +1,6 @@
-const { addUser, findUserByEmail, findUserById, updateUserTakenStatus, updateUserTestScore, fetchAllUsers, getUserUniqueApplication } = require('../queries/users');
+const { addUser, findUserByEmail, findUserById, updateUserTakenStatus, updateUserTestScore, fetchAllUsers, getUserUniqueApplication,
+    fetchAdminDetails, updateAdminCreds
+} = require('../queries/users');
 const { runQuery } = require('../config/database.config')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -111,6 +113,50 @@ const getAllUsers = async () => {
     }
 }
 
+const getAdminCred = async () => {
+    const data = await runQuery(fetchAdminDetails);
+    return {
+        code: 200,
+        status: 'success',
+        message: 'Admin credentials fetched successfully',
+        data
+    }
+}
+const getSingleAdmin = async (id) => {
+   console.log(id)
+    const data = await runQuery(findUserById, [id]);
+    return {
+        code: 200,
+        status: 'success',
+        message: 'Single admin credentials fetched successfully',
+        data: data[0]
+    }
+}
+
+const updateSingleAdmin = async (body) => {
+    const { first_name, last_name, email, phone_number, country, address, id } = body;
+    //find admin by Id first
+    const creds = await runQuery(findUserById, [id]);
+    if (creds.length === 0) {
+        throw {
+            code: 409,
+            message: 'Cannot find admin',
+            data: null,
+            status: 'error'
+        }
+    }
+   
+    const data = await runQuery(updateAdminCreds, [first_name, last_name, email, phone_number, country, address, id]);
+    return {
+        code: 200,
+        status: 'success',
+        message: 'Admin credentials updated successfully',
+        data: data[0]
+    }
+}
+
+
+
 const getUniqueApplication = async () => {
     const data = await runQuery(getUserUniqueApplication);
     return {
@@ -163,5 +209,8 @@ module.exports = {
     getAllUsers,
     updateTestTakenStatus,
     updateTestScores,
+    getAdminCred,
+    getSingleAdmin,
+    updateSingleAdmin,
     getUniqueApplication
 }
